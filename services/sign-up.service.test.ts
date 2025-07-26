@@ -1,11 +1,41 @@
-import{describe,it,expect}from"vitest"
-import {signUser}from"../services/sign-up.service"
+import{describe,it,expect,test}from"vitest"
+import {signUser,Users}from"../services/sign-up.service"
 
-describe('sign-up.usercase', () => {
-    it('should throw an error if not implement', () => {
-        expect(()=>{
-            signUser();
-        }).toThrow("Not implemented")
+
+    describe('', () => {
+        test('should throw an error when not implement', () => {
+            const payload={
+                username:"mynombre",
+                email:"email@gmail.com",
+                
+                password:"123456",
+                role:"User"as "Admin"|"User"
+            }
+            const result=signUser(payload)
+           expect(result).toEqual({error:{
+            code:"invalid data",
+            mensaje:"email already in use"
+
+           }})
+        })
+        
+   test('should throw an error when not implement', () => {
+            const payload={
+                 username:"mynombre",
+                email:"email@gmail.com",
+               
+                password:"123456",
+                role:"User"as ("Admin"|"User")
+            }
+            const result=signUser(payload)
+           expect(result).toEqual({error:{
+            code:"invalid data",
+            mensaje:"email already in use"
+
+           }})
+        })
+
     });
+    
      
-});
+
