@@ -1,5 +1,5 @@
 import{describe,it,expect,test}from"vitest"
-import {signUser,Users}from"../services/sign-up.service"
+import {signUser,Users}from"../use-cases/sign-up.service"
 
 
     describe('', () => {
