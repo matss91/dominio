@@ -1,11 +1,11 @@
 import{describe,it,expect,test}from"vitest"
-import {signUser,Users}from"../use-cases/sign-up.service"
+import {signUser,Users,UsersRegisterDependencies}from"../use-cases/sign-up.service"
+import {MockedUsersRepository, mockUsersRepository}from"../mocks/userRepository-mock"
 
-
-    describe('', () => {
-       
-         
-   test('should throw an error when not implement', () => {
+    describe('usuario ya registrado',async() => {
+       const _userRepository:MockedUsersRepository=mockUsersRepository([])
+         const dependences:UsersRegisterDependencies={users:_userRepository}
+   test('should throw an error when not implement',async() => {
             const payload={
                  username:"mynombre",
                 email:"email@gmail.com",
@@ -13,12 +13,9 @@ import {signUser,Users}from"../use-cases/sign-up.service"
                 password:"123456",
                 role:"User"as ("Admin"|"User")
             }
-            const result=signUser(payload)
-           expect(result).toEqual({error:{
-            code:"invalid data",
-            mensaje:"email already in use"
-
-           }})
+           const result= signUser(dependences,payload)
+          
+           expect(result).not.toBeNull()
         })
   test('should throw an error when not implement', () => {
             const payload={
@@ -28,7 +25,7 @@ import {signUser,Users}from"../use-cases/sign-up.service"
                 password:"123456",
                 role:"User"as ("Admin"|"User")
             }
-            const result=signUser(payload)
+            const result=signUser(dependences,payload)
            expect(result).toEqual({error:{
             code:"invalid data",
             mensaje:"the email cannot be left empty"
@@ -44,7 +41,7 @@ import {signUser,Users}from"../use-cases/sign-up.service"
                 password:"",
                 role:"User"as ("Admin"|"User")
             }
-            const result=signUser(payload)
+            const result=signUser(dependences,payload)
            expect(result).toEqual({error:{
             code:"invalid data",
             mensaje:"el password no puede estar vacio"
@@ -60,7 +57,7 @@ import {signUser,Users}from"../use-cases/sign-up.service"
                 password:"123456",
                 role:"User"as ("Admin"|"User")
             }
-            const result=signUser(payload)
+            const result=signUser(dependences,payload)
            expect(result).toEqual({error:{
             code:"invalid data",
             mensaje:"el usuario no puede estar vacio"

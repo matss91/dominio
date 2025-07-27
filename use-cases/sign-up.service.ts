@@ -1,3 +1,5 @@
+import { UsersRepository } from "../repositories/userRepository";
+
 export interface Users{
 
    
@@ -7,11 +9,18 @@ export interface Users{
     role:"Admin"|"User"
     
   }
+export interface UsersRegisterDependencies{
+users:UsersRepository
 
 
 
-export  function signUser({email,password,role,username}:Users){
-    
+}
+
+
+export  function signUser(deps: UsersRegisterDependencies, userData: Users
+){
+  const {users}=deps
+ const  {email,password,username}=userData
            if(email==""){
     return({error:{
             code:"invalid data",
@@ -30,11 +39,8 @@ export  function signUser({email,password,role,username}:Users){
             mensaje:"el password no puede estar vacio",
 
            }})}
-           if(email){
-    return({error:{
-            code:"invalid data",
-            mensaje:"email already in use",
-
-           }})}
-           }
+           const existingUser=users.findByEmail(email)
+          
+    return(existingUser)}
+           
     
